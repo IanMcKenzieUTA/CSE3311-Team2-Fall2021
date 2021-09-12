@@ -10,6 +10,8 @@ This repository if for Team 2's CSE3311 Project for fall 2021
 * Tripline - Improved by offline functionality
 
 # Risk List
+![image](https://user-images.githubusercontent.com/90561390/132991443-d667274c-6a7c-454d-9f02-b63d71131f4b.png)
+
 
 # Core use cases
 * Admin can add new events for all members of a group
