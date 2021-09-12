@@ -25,6 +25,21 @@ This repository if for Team 2's CSE3311 Project for fall 2021
 # Screen shot flow
 ![UI-Walkthrough](https://user-images.githubusercontent.com/90561390/132993823-8de83670-196e-4b7a-855e-77066d358e8e.jpg)
 
-# Software development plan
+# Software development plan ( 9/12/2021 )
+Iteration Plan
+* Figure out exact customer specifications, and opinion on first UI flow to better judge what they want
+* From customer meeting formalize technical requirements
+* Determine which technologies would be best for the project
+* Do tutorials on decided technologies for group mates who do not currently know said technology
+* Make a base UI flow either in code or using a tool for demo to the customer
 
+Tools
+* To be determined
 
+People
+* All group Mates
+* Proffesor Aiken as customer
+* Dr. Csallner
+
+Other Resources
+* Online tutorials for decided technologies and tools
