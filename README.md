@@ -23,6 +23,7 @@ This repository if for Team 2's CSE3311 Project for fall 2021
 * Users can upload photos from their travel
 
 # Screen shot flow
+![UI-Walkthrough](https://user-images.githubusercontent.com/90561390/132993823-8de83670-196e-4b7a-855e-77066d358e8e.jpg)
 
 # Software development plan
 
