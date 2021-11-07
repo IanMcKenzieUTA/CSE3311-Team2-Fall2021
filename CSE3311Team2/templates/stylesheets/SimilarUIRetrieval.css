@@ -1,0 +1,144 @@
+html, body{
+    width: 100%;
+    min-height: 100%;
+    background-color: #F1EFC6 ;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+}
+
+.header{
+    width: 100%;
+    height: 30px;
+    background-color: #987DD4;
+    text-align: center;
+    color: #000 ;
+}
+
+.footer{
+    width: 100%;
+    height: 30px;
+    background-color: #987DD4;
+    text-align: center;
+    color: #987DD4 ;
+}
+
+.canvasContainer {
+    background: #FFF;
+    width: 505px;
+    height: 805px;
+    border-style: groove;
+    Border-color: #D3D3D3
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rightButtons{
+    width: 200px;
+    padding-left: 20px;
+    padding-top: 100px;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: 10px;
+}
+
+#completeIcon{
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    display: flex;
+    width: 40%;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.output {
+    width: 40%;
+}
+
+.sketchpad {
+    width: 500px;
+    height: 800px;
+}
+
+.upperButtons {
+    padding-bottom: 5px;
+}
+
+#restartButton {
+    float: right;
+}
+
+ #simcontainer {
+            background: #FFF;
+            width: 100%;
+            height: 800px;
+            padding: 10px 10px 10px 10px;
+            overflow-y: scroll
+}
+
+#simcontainer img {
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            width: 150px;
+            margin: 5px 5px 5px 5px
+}
+#simcontainer img:hover {
+                box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+#output {
+    height: 875px;
+}
+
+#completeIcon{
+    background: #5DBB63;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+a {
+    color: #000;
+}
+
+#nav-tutorial{
+    background: #FFF;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    height: 600px;
+    width: 450px;
+    left: 70%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.end-content {
+    background-color: #f3f3f3;
+    border: 1px solid #000;
+    border-radius: 20px;
+    margin: 20%;
+    padding: 10px;
+}

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--Base setup-->
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="description" content="Sketch to App : Enabling Pencil to Code.">
+        <title>Doodle 2</title>
+
+        <!--Jquery-->
+        <script src="../javascripts/jquery.js"></script>
+        <!--Sketchpad code-->
+        <script src="../javascripts/FullSketchPad.js"></script>
+        <!--Bootstrap CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!--Bootstrap Icons-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+        <!--Bootstrap JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <!--Ajax jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" ></script>
+        <!--Shiv and Respond.js-->
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" ></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" ></script>
+        <!-- CSS sheets TODO: Add seperate CSS for mobile (later) -->
+        <link href="../stylesheets/SimilarUIRetrieval.css" rel="stylesheet">
+        <!--<link rel="stylesheet" media="screen and (max-device-width: 800px)" href="../stylesheets/SimilarUIRetrieval-mobile.css" />-->
+        <!--TODO: Figure out what this weird thing does-->
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-64561447-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <div id='wholeDocument' class='wholeDocument'>
+            <!--Header-->
+            <div id='header' class='header'>
+                <p>Doodle 2 UI Retrieval</p>
+            </div>
+
+            <!--Main UI-->
+            <div id='main' class='main'>
+                <div id='input' class='input'>
+                    <div id='sketch' class='sketch'>
+                        <div id='upperButtons' class='upperButtons'>
+                        <button class='upperButton' onclick="undo()" title="Undo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"/>
+                            </svg>
+                        </button>
+                        <button class='upperButton' onclick="redo()" title="Redo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
+                            </svg>
+                        </button>
+                        <button id='restartButton' title="Clear Sketch" onclick="restart()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                            </svg>
+                        </button>
+                        </div>
+                        <div id='canvasContainer' class='canvasContainer'>
+                            <canvas class="sketchpad" id="sketchpad"></canvas>
+                        </div>
+                    </div>
+                    <div id='rightButtons' class='rightButtons'>
+                        <p>Current predictions:</p>
+                        <input type="radio" id="PredictionRBTN0" name="grp1" value=0 onclick="onClassSelect(value);">
+                        <label id="Prediction0" ></label><br>
+                        <input type="radio" id="PredictionRBTN1"  name="grp1" onclick="onClassSelect(value);" value=1>
+                        <label id="Prediction1" ></label><br>
+                        <input type="radio" id="PredictionRBTN2"  name="grp1" value=2 onclick="onClassSelect(value);">
+                        <label id="Prediction2" ></label>
+                        <button onclick="doDoubleTap()"  id ="completeIcon">
+                            <p>Complete Icon</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div id='output' class='output'>
+                    <nav>
+                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-tutorial-tab" data-bs-toggle="tab" data-bs-target="#nav-tutorial" type="button" role="tab" aria-controls="nav-tutorial" aria-selected="true">Tutorial</button>
+                        <button class="nav-link" id="nav-cheatSheet-tab" data-bs-toggle="tab" data-bs-target="#nav-cheatSheet" type="button" role="tab" aria-controls="nav-cheatSheet" aria-selected="false">Cheat Sheet</button>
+                        <button class="nav-link" id="nav-results-tab" data-bs-toggle="tab" data-bs-target="#nav-results" type="button" role="tab" aria-controls="nav-results" aria-selected="false">Results</button>
+                      </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="nav-tutorial" role="tabpanel" aria-labelledby="nav-tutorial-tab">
+                          <h2>Getting started Tutorial</h2>
+                          <ol>
+                              <li>Draw on the sketchpad!</li>
+                              <li>Select which symbol you want from the "current predictions" selection</li>
+                              <li>Click "Complete Icon"</li>
+                              <li>Repeat until you're done with your UI</li>
+                              <li>Rate the results</li>
+                              <li>Click restart and do it again!</li>
+                          </ol>
+                          <h2>Tips</h2>
+                          <ul>
+                              <li>Undo and redo are on top left of the sketchpad</li>
+                              <li>The button on the top right completely resets the canvas</li>
+                              <li>While you will see results every time you complete an icon, you can keep drawing</li>
+                              <li>Redo can only redo strokes, not entire symbols</li>
+                              <li>Click on a result to expand it</li>
+                              <li>Click outside expanded screenshot to close it</li>
+                          </ul>
+                      </div>
+                      <div class="tab-pane fade" id="nav-cheatSheet" role="tabpanel" aria-labelledby="nav-cheatSheet-tab">
+                        <img src="../images/AllLeftPanelInstructions.png"></img>
+                      </div>
+                      <div class="tab-pane fade" id="nav-results" role="tabpanel" aria-labelledby="nav-results-tab">
+                          <div class="row sim-container">
+                            <center>
+                                <div class="col">
+                                     <div id="simcontainer">
+                                          <h1>  Retrieved UI</h1>
+                                      </div>
+                                   <button id="btnPrevious">
+                                        &lt; Previous
+                                   </button>
+                                    <span id="page"></span>
+                                   <button id="btnNext">
+                                    &gt; Next
+                                   </button>
+
+                                </div>
+                            </center>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <div id=footer class=footer>
+                <a href="https://forms.gle/nfPVBQQnzHTT7TCG8">Feedback</a>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <img src="../images/AllLeftPanelInstructions.png" id="myImagenavExpndImg" />
+            </div>
+        </div>
+
+        <div id="succeed-modal" class="modal">
+            <div class="end-content">
+                <h2>We're glad we found a match!</h2>
+                <p>If you want to search for another UI just click the restart button (top left of sketchpad)!</p>
+            </div>
+        </div>
+
+        <div id="fail-modal" class="modal">
+            <div class="end-content">
+                <h2>We're sorry we couldn't find a match</h2>
+                <p>If you want to try again just click the restart button (top left of sketchpad)!</p>
+            </div>
+        </div>
+
+    <script>
+        var sketchpad;
+        var sketchData = null;
+        var sketchCount = 0;
+        var interValIDs = [];
+        var widthofSketchPad = document.getElementById('sketchpad').offsetWidth;
+        var heightofSketchPad = document.getElementById('sketchpad').offsetHeight;
+        var curPage = 1;
+        var similarDataArray = [];
+        var modal = document.getElementById("myModal");
+        var sModal = document.getElementById("succeed-modal");
+        var fModal = document.getElementById("fail-modal");
+        var resultsTrigger = document.querySelector('#nav-results');
+        var resultsTab = new bootstrap.Tab(resultsTrigger);
+
+
+        $(document).ready(function() {
+            console.log("ready");
+            sketchpad = new Sketchpad({
+                element: '#sketchpad',
+                width:  500,
+                height: 800
+            });
+            $('#color-picker').change(color);
+            $('#color-picker').val('#000');
+            $('#size-picker').change(size);
+            $('#size-picker').val(0.5);
+        });
+
+        document.addEventListener("mouseup", mouseup1);
+        document.addEventListener("touchend", mouseup1);
+
+        // on drawing selected from prediction invoke this function
+        function onClassSelect(value){
+            $.post("/ClassSelect/", {selectClassLabel: value }, function(err, req, resp){});
+        }
+
+        // For mid predict set radio labels
+        function addPredictionData(dictObj){
+            var keyval=0;
+            for (var key in dictObj) {
+                var rdbuttonLabel = document.getElementById("Prediction"+ keyval.toString());
+                rdbuttonLabel.innerHTML = dictObj[key][0] + ' ' + dictObj[key][2] + '%';
+                keyval = keyval +1;
+            }
+            document.getElementById("PredictionRBTN0").click();
+            document.getElementById("PredictionRBTN0").checked="checked"
+        }
+
+        window.onclick = function(event) {
+          if (event.target == modal || event.target == fModal || event.target == sModal) {
+            modal.style.display = "none";
+            sModal.style.display = "none";
+            fModal.style.display = "none";
+          }
+        }
+
+        // clear prediction for drawing completion
+        function clearPredictionData(){
+            for (var keyval = 0; keyval < 3; keyval++) {
+                var rdbuttonLabel = document.getElementById("Prediction"+ keyval.toString());
+                rdbuttonLabel.innerHTML = "";
+                document.getElementById("PredictionRBTN"+ keyval.toString()).checked=false;
+            }
+        }
+
+        //expand a search drawing and fetch it from S3 from the image ID
+        function expandImage(imgs) {
+            var expandImg = document.getElementById("myImagenavExpndImg");
+            var srcImage = "https://ricoimage.s3.us-east-2.amazonaws.com/OnlyImage/"+imgs.name+".jpg";
+            expandImg.src = srcImage;
+            modal.style.display = "block";
+            console.log("here");
+        }
+
+        // when mouse up fetch prediction
+        function mouseup1() {
+            var  newsketchData = JSON.stringify(sketchpad.strokes)
+            if (newsketchData != sketchData  ){
+                sketchData = newsketchData;
+                $.post("/MidPredictDoodle/", {save_data: sketchData }, function(err, req, resp){
+                    if (resp["responseJSON"]["predictedResult"] != "Unchanged" ){
+                        addPredictionData(resp["responseJSON"]["predictedResult"]);
+                    }
+                });
+            }
+            if(sketchpad.strokes.length==0){
+                clearPredictionData();
+            }
+        }
+
+        // From the fetched image create gallery
+        function setSimilarUI(dataArray){
+            var container = document.getElementById('simcontainer');
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            var i;
+            $('#simcontainer').append('<h2> Top Picks </h2>');
+            $('#simcontainer').append('<button id="pass-button" title="Match found" onclick="succeed()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-hand-thumbs-up" viewBox="0 0 16 16"><path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/></svg></button>');
+            $('#simcontainer').append('<button id="fail-button" title="Match not found" onclick="failed()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-hand-thumbs-down" viewBox="0 0 16 16"><path d="M8.864 15.674c-.956.24-1.843-.484-1.908-1.42-.072-1.05-.23-2.015-.428-2.59-.125-.36-.479-1.012-1.04-1.638-.557-.624-1.282-1.179-2.131-1.41C2.685 8.432 2 7.85 2 7V3c0-.845.682-1.464 1.448-1.546 1.07-.113 1.564-.415 2.068-.723l.048-.029c.272-.166.578-.349.97-.484C6.931.08 7.395 0 8 0h3.5c.937 0 1.599.478 1.934 1.064.164.287.254.607.254.913 0 .152-.023.312-.077.464.201.262.38.577.488.9.11.33.172.762.004 1.15.069.13.12.268.159.403.077.27.113.567.113.856 0 .289-.036.586-.113.856-.035.12-.08.244-.138.363.394.571.418 1.2.234 1.733-.206.592-.682 1.1-1.2 1.272-.847.283-1.803.276-2.516.211a9.877 9.877 0 0 1-.443-.05 9.364 9.364 0 0 1-.062 4.51c-.138.508-.55.848-1.012.964l-.261.065zM11.5 1H8c-.51 0-.863.068-1.14.163-.281.097-.506.229-.776.393l-.04.025c-.555.338-1.198.73-2.49.868-.333.035-.554.29-.554.55V7c0 .255.226.543.62.65 1.095.3 1.977.997 2.614 1.709.635.71 1.064 1.475 1.238 1.977.243.7.407 1.768.482 2.85.025.362.36.595.667.518l.262-.065c.16-.04.258-.144.288-.255a8.34 8.34 0 0 0-.145-4.726.5.5 0 0 1 .595-.643h.003l.014.004.058.013a8.912 8.912 0 0 0 1.036.157c.663.06 1.457.054 2.11-.163.175-.059.45-.301.57-.651.107-.308.087-.67-.266-1.021L12.793 7l.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315l-.353-.354.353-.354c.047-.047.109-.176.005-.488a2.224 2.224 0 0 0-.505-.804l-.353-.354.353-.354c.006-.005.041-.05.041-.17a.866.866 0 0 0-.121-.415C12.4 1.272 12.063 1 11.5 1z"/></svg></button>');
+            $('#simcontainer').append('<h2></h2>');
+            for (i = 0; i < dataArray.length; i++) {
+                var srcImage = "https://ricoimage.s3.us-east-2.amazonaws.com/thumbnails/"+dataArray[i]+".jpg";
+                var imgElement = '<img src='+srcImage+' loading="lazy"  height="267" name='+dataArray[i]+' onclick="expandImage(this)" />';
+                $('#simcontainer').append(imgElement);
+            }
+        }
+        // Deal with next button in the search gallery
+        $("#btnPrevious").click(function() {
+            if (curPage != 1 && similarDataArray.length != 0) {
+                curPage--;
+                var lLim = (curPage-1)*80;
+                var uLim = curPage*80;
+                var dataArray = similarDataArray.slice(lLim,uLim);
+                setSimilarUI(dataArray);
+            }
+        });
+
+        // Deal with previous button in the search gallery
+        $("#btnNext").click(function() {
+            var totoalImage = similarDataArray.length;
+            if(curPage*80 < totoalImage  && totoalImage != 0){
+                curPage++;
+                var lLim = (curPage-1)*80;
+                var uLim = curPage*80;
+                if (uLim > totoalImage) {
+                    uLim = totalImage;
+                }
+                var dataArray = similarDataArray.slice(lLim,uLim);
+                setSimilarUI(dataArray);
+            }
+        });
+
+        // function to deal with done icon
+        function doDoubleTap() {
+            if(sketchpad.strokes.length !=0){
+                sketchpad.pustoStack();
+                var  newsketchData = JSON.stringify(sketchpad.strokes)
+                sketchData = newsketchData;
+                $.post("/DrawSaveWithSimilar/", {save_data: sketchData }, function(err, req, resp){
+                    if (resp["responseJSON"]["predictedResult"] != "Unchanged" ){
+                        similarDataArray =resp["responseJSON"]["similarUI"];
+                        var dataArray = similarDataArray.slice(0,80);
+                        setSimilarUI(dataArray);
+                        curPage = 1;
+                    }
+                console.log(resultsTab);
+                resultsTab.show();
+                });
+                sketchpad.clearAll();
+                sketchpad.drawStrokes();
+                clearPredictionData();
+
+            }
+        }
+
+        //Negative Response
+        function succeed() {
+            sModal.style.display = "block";
+        }
+        //Positive Response
+        function failed() {
+            fModal.style.display = "block";
+        }
+
+        //Remove last stroke or previous symbol
+        function undo() {
+            if(sketchpad.strokes.length>0){
+                sketchpad.undo();
+                mouseup1();
+            } else {
+                if (sketchpad.strokesStack.length>0){
+                    sketchpad.clearAll();
+                    sketchpad.strokesStack.pop();
+                     var  newsketchData = JSON.stringify(sketchpad.strokes)
+                     sketchpad.drawStrokes();
+                     clearPredictionData();
+                    $.post("/RemoveLastIconForSimilar/", {save_data: newsketchData }, function(err, req, resp){
+                          similarDataArray =resp["responseJSON"]["similarUI"];
+                          var dataArray = similarDataArray.slice(0,80);
+                          setSimilarUI(dataArray);
+                          curPage = 1;
+                         });
+                }
+            }
+        }
+
+        //Completely clear sketchpad
+        function restart() {
+            while(sketchpad.strokesStack.length || sketchpad.strokes.length) {
+                undo();
+            }
+        }
+
+        //redo last action, note only works with strokes not symbols
+        function redo() {
+            sketchpad.redo();
+            mouseup1();
+        }
+
+        setTimeout(setcanvaswidth, 1000);
+        // Set canvas at the beginning
+        function setcanvaswidth(){
+            var canvasWidth = JSON.stringify(widthofSketchPad)
+            var canvasHeight = JSON.stringify(heightofSketchPad)
+            $.post("/SetCanvasSize/", {canvas_width: canvasWidth, canvas_height: canvasHeight }, function(err, req, resp){});
+        }
+
+        function color(event) {
+            sketchpad.color = $(event.target).val();
+          }
+          function size(event) {
+            sketchpad.penSize = $(event.target).val();
+          }
+    </script>
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-59165581-1");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+  </body>
+</html>

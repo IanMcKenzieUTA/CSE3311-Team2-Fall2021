@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Sketch to App : Enabling Pencil to Code.">
+    <title>Doodle 2 UI Code</title>
+
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.799.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <script src="../javascripts/FullSketchPad.js"></script>
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../stylesheets/uiretrivecom-page.css" rel="stylesheet">
+    <link href="../stylesheets/uiret-page.css" rel="stylesheet">
+    <link href="../stylesheets/uiretrivesidenav-page.css" rel="stylesheet">
+    <link href="../stylesheets/uiretriveimagenav-page.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .myfont {
+            font-family: 'Muli';
+            font-weight: 200;
+        }
+    </style>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-64561447-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <style>
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.fail-modal-content {
+  background-color: #ddbcb6;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.modal-text {
+font-weight: normal;
+  font-size: 28px;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.info_button {
+  animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.info_button {
+  animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+
+
+    </style>
+
+
+</head>
+<!-- Navigation -->
+<div class="intro-header-retrival" id="div_id_NormalHeader">
+    <div class="header-container">
+        <div class="header-Ins-container">
+            <span class="spanStyle" onclick="openNav()">&#9776; Cheat sheet</span>
+        </div>
+
+        <div class="header-title-container">
+            <p> Search-by-Sketch </p>
+        </div>
+        <div class="header-draw-container ">
+            <img class="header-img" src="../images/DrawHereright.png" height="80" width="" />
+        </div>
+
+        <div class="header-seperateIns-container">
+            <img class="header-img"  id="upperInstruction" src="../images/UpInstruction1.png"  />
+        </div>
+        <div class="header-info-tutorial">
+            <button onclick="showModal()"  class="info_button"><img src="../images/info.png" height="40" /></button>
+        </div>
+    </div>
+</div>
+
+<!-- /.container -->
+
+<div class="page-container" id="div_id_drawing">
+
+  <div class="maincontainer" id="tutorialContainer">
+
+    <div class="targetContainer" id="targetImageContainer">
+        <p>Target UI</p>
+
+        <div class="imgContainer" id="targetImage">
+                <img class="target-image" id="LabelID" src="../images/blank.png" alt="Smiley face" height="640"/>
+        </div>
+       
+    </div>
+    
+    <div class="draw-container">
+      <div class="left-button-container" id="sketchPadLeftButtonContainer">
+      
+            <div class="left-single-button-container" id="undoLabel">
+                      <button class="left-single-button" onclick="undo()" id ="undoButton"><img class="button-image" src="../images/undo.jpg" /></button>
+                      <p class="button-text">Undo Strokes</p>
+            </div>
+
+               
+            <div class="left-single-button-container" id="redoLabel">
+                      <button class="left-single-button" onclick="redo()"  ><img class="button-image" src="../images/redo.jpg" /></button>
+                      <p class="button-text">Redo Strokes</p>
+            </div>
+
+            
+
+      </div>
+      <div class="canvas-container">
+          <div id="sketchPadModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p class="modal-text" id="modalText"></p>
+                </div>
+          </div>
+          <div id="failModal" class="modal">
+                <!-- Modal content -->
+                <div class="fail-modal-content ">
+                    <span class="close">&times;</span>
+                    <p class="modal-text" id="failmodalText"> Stuck!!! See current instruction by pressing the info tab at the top-right or refresh the page to start again.  </p>
+                </div>
+          </div>
+          <div class="sketchPadContainer" id="sketchPadContainer">
+                      <canvas class="sketchpad" id="sketchpad"></canvas>
+          </div>
+
+      </div>
+      <div class="right-button-container" id="sketchPadRightButtonContainer">
+
+
+                 <div class="right-prediction-container" id="progressLabel">
+                      <p>Current predictions:</p>
+                      <input type="radio" id="PredictionRBTN0" name="grp1" value=0 onclick="onClassSelect(value);"><br>
+                      <label id="Prediction0" ></label><br>
+                      <input type="radio" id="PredictionRBTN1"  name="grp1" onclick="onClassSelect(value);" value=1><br>
+                      <label id="Prediction1" ></label><br>
+                      <input type="radio" id="PredictionRBTN2"  name="grp1" value=2 onclick="onClassSelect(value);"><br>
+                      <label id="Prediction2" ></label>
+                </div>
+                <div class="right-single-button-container" >
+                      <button class="right-single-button" onclick="doDoubleTap()"><img class="button-image" src="../images/selection.png"  /></button>
+                      <p class="button-text">Icon done</p>
+                </div>
+                <div class="right-single-button-container" id="FinishButton1">
+                    <a class="right-single-button" href="{{ url_for('SUTutorialRoutes.toolIns_1') }}"> <img class="button-image"  src="../images/AnotherTryLong.png" alt="Smiley face" /></a>
+                </div>
+                <div class="right-single-button-container" id="FinishButton2">
+                    <a class="right-single-button" href="{{ url_for('SUTutorialRoutes.toolIns_2') }}"> <img class="button-image"  src="../images/GoNext.gif" alt="Smiley face"/></a>
+                </div>
+
+        </div>
+    </div>
+   </div>
+
+
+</div> 
+
+<div id="myImagenav" class="imagenav">
+              <img src="../images/AllLeftPanelInstructions.png" width="400" height="600" id="myImagenavExpndImg" />
+</div>  
+        
+<div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <p >Cheat sheet to draw</p>
+          <img src="../images/AllLeftPanelInstructions.png" width="600" />
+</div>
+    <!-- FOOTER  -->
+   <footer class="footer-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-inline">
+              <li class="footer-menu-divider">&sdot;</li>
+              <li>
+                <a href="https://forms.gle/nfPVBQQnzHTT7TCG8">Feedback</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      var sketchpad;
+      var  sketchData = null ;
+      var sketchCount = 0;
+      var interValIDs = [];
+      var widthofSketchPad = document.getElementById('sketchpad').offsetWidth;
+      var heightofSketchPad = document.getElementById('sketchpad').offsetHeight;
+   //   var sketchStack = [];
+      $(document).ready(function() {
+        sketchpad = new Sketchpad({
+          element: '#sketchpad',
+          width:  400,
+          height: 700
+        });
+        $('#color-picker').change(color);
+        $('#color-picker').val('#000');
+        $('#size-picker').change(size);
+        $('#size-picker').val(0.5);
+      });
+            // No finish button at first
+        var finishButton1 = document.getElementById("FinishButton1");
+        var finishButton2 = document.getElementById("FinishButton2");
+        finishButton1.style.display = "none";
+        finishButton2.style.display = "none";
+
+        var modal = document.getElementById("sketchPadModal");
+        var failmodal = document.getElementById("failModal");
+
+        var span = document.getElementsByClassName("close")[0];
+        var spanfail = document.getElementsByClassName("close")[1];
+        var predictionArray = new Array ("", "", "", "", "");
+
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        spanfail.onclick = function() {
+            failmodal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+            modal.style.display = "none";
+                }
+            if (event.target == failmodal) {
+            failmodal.style.display = "none";
+            }
+        }
+      document.addEventListener( "keydown", doKeyDown, true);
+
+	  setTimeout(setUIISimilarImage, 500);
+      var instructionCount = 1;
+      var correctDrawing = false;
+      var showModalOnce = true;
+
+      // Start a timer to track 20 seconds and show stuck message
+      var failtimer = 0;
+      function setModalText(value){
+        var modalText = document.getElementById("modalText");
+        modalText.innerHTML = value;
+        modal.style.display = "block";
+        // Clear any previous timeout
+        if(failtimer!=0){
+            clearTimeout(failtimer);
+        }
+        failtimer = setTimeout(showFailModal, 30000);
+      }
+
+      function showModal(){
+       modal.style.display = "block";
+      }
+      function showFailModal(){
+       failmodal.style.display = "block";
+      }
+
+        // Function call after intervals
+      function setUIISimilarImage(){
+
+         if(instructionCount==1){
+            setModalText( "Draw a search icon in the canvas as shown on the left");
+            }
+         if(instructionCount==2){
+            setModalText( "Now draw a share icon. Search-by-sketch will show its top 3 predictions. Feel free to select the best match and press the icon <u><b>d</u></b>one button to move on.");
+          }
+          if(instructionCount==3){
+            setModalText( "To draw a text button first draw a container (rectangle). <d> Only container no squiggle within </d>");
+          }
+         imgElement = document.getElementById("LabelID")
+		 imgElement.src = "../images/Tutorial_"+instructionCount.toString() +".png";
+         instructionCount++;
+      }
+
+ // on exact drawing selected from prediction, set modal and correct drawing.
+      function onClassSelect(value){
+        if(value!=0){
+            if(instructionCount==2 && predictionArray[value]=='search'){
+                correctDrawing = true;
+                setModalText("Share icon selected. Press the icon <u><b>d</u></b>one button (Shortcut- <q>d</q>) to move on");
+            }
+            if(instructionCount==3 && predictionArray[value]=='share'){
+                correctDrawing = true;
+                setModalText("Share icon selected. Press the icon <u><b>d</u></b>one button to move on");
+            }
+            if(instructionCount==4 && predictionArray[value]=='container'){
+                correctDrawing = true;
+                setModalText("Container icon selected. Press the icon <u><b>d</u></b>one button to move on");
+            }
+            if(instructionCount==5 && predictionArray[value]== "squiggle"){
+
+               var  canvasWidth = JSON.stringify(widthofSketchPad)
+               var canvasHeight = JSON.stringify(heightofSketchPad)
+               // Find if there is textbutton drawn correctly
+               $.post("/FindTextButtonOnClassSelect/", {canvas_width: canvasWidth, canvas_height: canvasHeight}, function(err, req, resp){
+               if (resp["responseJSON"]["reponseText"] == "Yes" ){
+                      setModalText("Now press the icon done button");
+                      correctDrawing = true;
+                  }
+                else{
+                        setModalText( "Please draw a squiggle within the container. Remove unnecessary squiggle with undo button. ");
+                }
+
+                });
+            }
+
+            $.post("/ClassSelect/", {selectClassLabel: value }, function(err, req, resp){
+            });
+            }
+
+    	}
+
+      // For mid predict set radio labels and look for correct drawings
+     function addPredictionData(dictObj,sketchData){
+          var keyval=0;
+            for (var key in dictObj) {
+				var rdbuttonLabel = document.getElementById("Prediction"+ keyval.toString());
+                rdbuttonLabel.innerHTML = dictObj[key][0] + ' ' + dictObj[key][2] + '%';
+                predictionArray[keyval] = dictObj[key][0] ;
+				keyval = keyval +1;
+            
+          }
+
+
+          if(dictObj[0][0]=="search" && instructionCount==2){
+            correctDrawing = true;
+            if(showModalOnce){
+                setModalText("Search icon detected. Press the icon <u><b>d</u></b>one button (Shotcut- <q>d</q>) to tell Search-by-Sketch that you finished sketching an icon and are ready to move on.");
+            }
+            showModalOnce = false;
+          }
+          else if(dictObj[0][0]=="share" && instructionCount==3){
+             correctDrawing = true;
+             if(showModalOnce){
+                 setModalText( "Share icon detected. You can finish the drawing or press the icon <u><b>d</u></b>one button to move on");
+             }
+
+             showModalOnce = false;
+          }
+          else if(dictObj[0][0]=="container" && instructionCount==4){
+            correctDrawing = true;
+
+            if(showModalOnce){
+                setModalText( "Container detected. You can finish the drawing or press icon <u><b>d</u></b>one button");
+            }
+            showModalOnce = false;
+          }
+
+ 	      else if(dictObj[0][0]=="squiggle" && instructionCount==5){
+               var  canvasWidth = JSON.stringify(widthofSketchPad)
+               var canvasHeight = JSON.stringify(heightofSketchPad)
+               $.post("/FindTextButton/", {canvas_width: canvasWidth, canvas_height: canvasHeight,save_data: sketchData}, function(err, req, resp){
+               if (resp["responseJSON"]["reponseText"] == "Yes" ){
+                      setModalText( "Now press the icon <u><b>d</u></b>one button.");
+                      correctDrawing = true;
+                  }
+                else{
+                      setModalText( "Please draw a squiggle within the container ");
+                }
+
+            });
+            }
+
+          else{
+            correctDrawing = false;
+          }
+          document.getElementById("PredictionRBTN0").click();
+          document.getElementById("PredictionRBTN0").checked="checked"
+
+      }
+
+      // clear prediction for drawing completion
+
+      function clearPredictionData(){
+            for (var keyval = 0; keyval < 3; keyval++) {
+				var rdbuttonLabel = document.getElementById("Prediction"+ keyval.toString());
+                rdbuttonLabel.innerHTML = "";
+            	document.getElementById("PredictionRBTN"+ keyval.toString()).checked=false;
+          }
+      }
+      
+
+       // when mouse up fetch prediction
+      function mouseup1() {
+        
+            var  newsketchData = JSON.stringify(sketchpad.strokes)
+            if (newsketchData != sketchData  ){
+            sketchData = newsketchData;
+            $.post("/MidPredictDoodle/", {save_data: sketchData }, function(err, req, resp){
+                if (resp["responseJSON"]["predictedResult"] != "Unchanged" ){
+                      addPredictionData(resp["responseJSON"]["predictedResult"],sketchData);
+                  }
+
+            });
+            }
+            $.post("/ClassSelect/", {selectClassLabel: 0 }, function(err, req, resp){
+            });
+            if(sketchpad.strokes.length==0){
+                  clearPredictionData();
+            }
+             
+      }
+
+
+      // function to deal with done icon
+            
+      function doDoubleTap() {
+          if(sketchpad.strokes.length !=0){
+
+          if(correctDrawing==false){
+           if(instructionCount==4){
+                setModalText( "Press draw only container <b>(no squiggle)</b>. Use redo or undo to change the shape");
+           }
+           else{
+                setModalText( "Press redo or undo to change the drawing to match the shape.");
+            }
+          }
+          else{
+           $.post("/DrawSaveForFirstTutorial/", {save_data: sketchData }, function(err, req, resp){
+
+            });
+
+          if(instructionCount==2 || instructionCount==3){
+            showModalOnce = true;
+            setUIISimilarImage();
+
+          }
+
+          else if(instructionCount==4){
+            showModalOnce = true;
+            setModalText( "Now draw a squiggle within the container (rectangle)");
+            instructionCount++;
+          }
+
+          else if(instructionCount==5){
+            setModalText("Let's move on to the next step to see more details about Search-by-Sketch");
+            finishButton1.style.display = "block";
+            finishButton2.style.display = "block";
+            instructionCount++;
+          }
+             sketchpad.pustoStack();
+             sketchpad.clearAll();
+             sketchpad.drawStrokes();
+             clearPredictionData();
+
+          }
+          correctDrawing= false;
+
+        }
+
+    }
+    function doKeyDown(e) {
+
+            if ( e.keyCode == 68 ) {
+                doDoubleTap();
+            }
+
+        }
+        
+
+
+
+      document.addEventListener("touchstart", closeimageNav);
+      document.addEventListener("mousedown", closeimageNav);
+      document.addEventListener("mouseup", mouseup1);
+      document.addEventListener("touchend", mouseup1);
+      document.addEventListener("dblclick",doDoubleTap);
+      setTimeout(setcanvaswidth, 1000);
+      
+      function setcanvaswidth(){
+             var  canvasWidth = JSON.stringify(widthofSketchPad)
+             var canvasHeight = JSON.stringify(heightofSketchPad)
+          $.post("/SetCanvasSize/", {canvas_width: canvasWidth, canvas_height: canvasHeight }, function(err, req, resp){
+            });   
+      }
+        
+      function undo() { 
+        sketchpad.undo();
+        mouseup1();
+        
+      }
+      function redo() {
+        sketchpad.redo();
+        mouseup1();
+      }
+      function color(event) {
+        sketchpad.color = $(event.target).val();
+      }
+      function size(event) {
+        sketchpad.penSize = $(event.target).val();
+      }
+      function animateSketchpad() {
+        sketchpad.animate(10);
+      }
+
+      function recover(event) {
+        var settings = sketchpad.toObject();
+        settings.element = '#other-sketchpad';
+        var otherSketchpad = new Sketchpad(settings);
+        $('#recover-button').hide();
+      }
+      
+      function save() {
+       
+         sketchpad.clearAll()
+             
+      }
+
+
+      
+      function restartGoal() {
+         sketchpad.clearAll();
+      }
+      
+      function erase() {
+         sketchpad.erase();
+
+      }
+      
+
+      function unerase() {
+         sketchpad.unerase();
+
+      }
+      function openNav() {
+          document.getElementById("mySidenav").style.width = "600px";
+        }
+
+      function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+
+       $(document).off(function() {
+
+      });
+      function closeimageNav() {
+          document.getElementById("myImagenav").style.width = "0";
+          document.getElementById("mySidenav").style.width = "0";
+        }
+      
+    </script>
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-59165581-1");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+  </body>
+</html>

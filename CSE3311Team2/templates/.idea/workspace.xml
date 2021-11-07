@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1a253806-d232-44b6-be10-3ba308e86ae1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../RectUtils/RectObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/../RectUtils/RectObj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RectUtils/RectUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/../RectUtils/RectUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../androidHelper/SketchLayoutCreator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../androidHelper/SketchLayoutCreator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../htmlHelper/HtmlGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../htmlHelper/HtmlGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mlModule/GetPrediction.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mlModule/GetPrediction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mlModule/Predictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mlModule/Predictor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../similarUI/similarUIUtility.py" beforeDir="false" afterPath="$PROJECT_DIR$/../similarUI/similarUIUtility.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../temp.py" beforeDir="false" afterPath="$PROJECT_DIR$/../temp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SketchToUI/app/src/main/res/drawable-v24/hamburger.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SketchToUI/app/src/main/res/drawable-v24/userimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homepageFullHTMLSimilarV2.html" beforeDir="false" afterPath="$PROJECT_DIR$/homepageFullHTMLSimilarV2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/hamburger.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/userimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newWebItem.html" beforeDir="false" afterPath="$PROJECT_DIR$/newWebItem.html" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1eWK4fyIrMbCp0tIM9397XpxpCJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SketchToUI" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1a253806-d232-44b6-be10-3ba308e86ae1" name="Default Changelist" comment="" />
+      <created>1594431718871</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594431718871</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
